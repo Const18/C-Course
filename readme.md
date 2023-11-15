@@ -10,5 +10,5 @@
 
 # LaTeX [url](https://www.urn.su/latex/symbols/)
 $$
-\frac{1}{2}*x^2+A*x+a_1*a_2=0
+\frac{1}{2}*x^2+A*x+a_1*a_3=0
 $$
