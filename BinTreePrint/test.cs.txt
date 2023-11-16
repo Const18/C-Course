@@ -1,0 +1,35 @@
+public class Author
+{
+  public int Id;
+  public string AuthorName;
+}
+
+public class Book
+{
+  public int Id;
+  public string BookName;
+  public string AuthorName;
+  public int? AuthorId;
+}
+
+public class ReviewMe
+{
+  private Repository repository = new Repository(new SqlConnection("address:port;login=sa;password=12345"));
+
+  public bool Update(Book[] books)
+  {
+    foreach (var book in books)
+    {
+      var author = repository.GetAuthor(book.AuthorName);
+      book.AuthorId = author.Id;
+      repository.Update(book);
+      return true;
+    }
+  }
+
+  public class Repository
+  {
+    public Repository(SqlConnection connection) { ignore }
+    public void Update(Book book) { ignore }
+    public Author GetAuthor(string name) { ignore }
+  }
