@@ -1,5 +1,6 @@
 using Infrastructure;
 using Persistance;
+using Model;
 
 namespace ContactApplication;
 
@@ -7,16 +8,25 @@ public class App
 {
   public static void Run()
   {
-    PrinterRepository printerRepository = new();
-    ContactCreator contactCreator = new();
+    IContactCreator contactCreator = new UserContactCreator();
+    IContactCreator companyContactCreator = new CompanyContactCreator();
     ContactRepository repo = new();
-
-    for (int i = 0; i < 10; i++)
+ 
+    for (int i = 0; i < 5; i++)
     {
-      repo.Append(contactCreator.GetContact());
-    }
+      if(Random.Shared.Next(2)==0)
+      {
+        repo.Append(contactCreator.GetContact());
+      }
+      else 
+      {
+        repo.Append(companyContactCreator.GetContact());
+      }
+    }   
 
-    string res = printerRepository.Print(repo);
-    Console.WriteLine(res);
+    foreach (Contact item in repo.GetAll())
+    {
+      Console.WriteLine(item.Nickname);
+    }
   }
 }

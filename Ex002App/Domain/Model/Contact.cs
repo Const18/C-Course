@@ -4,30 +4,21 @@ public class Contact
 {
   public Contact()
   {
-    this.FirstName = String.Empty;
-    this.LastName = String.Empty;
     this.TelephoneNumber = String.Empty;
-    this.DayOfBirth = DateOnly.MinValue;
-    this.Email = "nil";
   }
 
-  public Contact(
-    string firstName,
-    string lastName,
-    string telephoneNumber,
-    DateOnly dayOfBirth,
-    string email)
+  public Contact(string telephoneNumber)
   {
-    this.FirstName = firstName;
-    this.LastName = lastName;
     this.TelephoneNumber = telephoneNumber;
-    this.DayOfBirth = dayOfBirth;
-    this.Email = email;
   }
-
-  public string FirstName { get; set; }
-  public string LastName { get; set; }
+  
+  public virtual string Nickname { get;}
   public string TelephoneNumber { get; set; }
-  public DateOnly DayOfBirth { get; set; }
-  public string Email { get; set; }
+
+    public override string ToString()
+    {
+      string output = String.Empty;
+      output += $"TelephoneNumber: {this.TelephoneNumber}\n";
+      return output;
+    }
 }
