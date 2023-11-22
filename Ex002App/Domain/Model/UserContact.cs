@@ -1,11 +1,11 @@
 namespace Model;
 
-public class UserContact : Contact
+public class UserContact : Contact, IComparable<UserContact>, IEquatable<UserContact>
 {
-  public UserContact() : 
+  public UserContact() :
   this(String.Empty,
        String.Empty,
-       String.Empty, 
+       String.Empty,
        DateOnly.MinValue,
        "nil")
   {
@@ -29,16 +29,39 @@ public class UserContact : Contact
   public DateOnly DayOfBirth { get; set; }
   public string Email { get; set; }
 
-    public override string Nickname
+  public override string Nickname
+  {
+    get
     {
-      get
-      {
-        return $"[{this.FirstName} {this.LastName}]";
-      }
+      return $"[{this.FirstName} {this.LastName}]";
     }
+  }
 
+  public int CompareTo(UserContact other)
+  {
+    // > -> 1
+    // == -> 0
+    // < -> -1
+    // if (this.Id > other.Id) return 1;
+    // else if (this.Id == other.Id) return 0;
+    // else return -1;
 
-    public override string ToString()
+    return this.LastName.CompareTo(other.LastName);
+  }
+
+  public bool Equals(UserContact other)
+  {
+    return this.FirstName == other.FirstName
+        && this.LastName == other.LastName
+        && this.TelephoneNumber == other.TelephoneNumber;
+  }
+
+  public override int GetHashCode()
+  {
+    return base.GetHashCode();
+  }
+
+  public override string ToString()
   {
     string output = String.Empty;
 

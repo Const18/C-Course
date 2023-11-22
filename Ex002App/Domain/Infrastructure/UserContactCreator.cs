@@ -5,6 +5,14 @@ namespace Infrastructure;
 // public class UserContactCreator : ContactCreator
 public class UserContactCreator : IContactCreator
 {
+  private static int globalId;
+
+  static UserContactCreator()
+  {
+    globalId = 1;
+  }
+
+
   private string[] firstNames;
   private string[] lastNames;
 
@@ -36,6 +44,7 @@ public class UserContactCreator : IContactCreator
       Random.Shared.Next(10, 100),   // {2}
       Random.Shared.Next(10, 100)    // {3}
     );
+    contact.Id = globalId++;
 
     return contact;
   }

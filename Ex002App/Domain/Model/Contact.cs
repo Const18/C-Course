@@ -11,14 +11,16 @@ public class Contact
   {
     this.TelephoneNumber = telephoneNumber;
   }
-  
-  public virtual string Nickname { get;}
+
+  public int Id { get; set; }
+  public virtual string Nickname { get; }
   public string TelephoneNumber { get; set; }
 
-    public override string ToString()
-    {
-      string output = String.Empty;
-      output += $"TelephoneNumber: {this.TelephoneNumber}\n";
-      return output;
-    }
+  public override string ToString()
+  {
+    string output = String.Empty;
+    output += $"Id: {this.Id}\n";
+    output += $"TelephoneNumber: {this.TelephoneNumber}\n";
+    return output;
+  }
 }

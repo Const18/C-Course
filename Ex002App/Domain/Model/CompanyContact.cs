@@ -4,7 +4,7 @@ public class CompanyContact : Contact
 {
   public CompanyContact()
     : this("Default company", String.Empty, String.Empty)
-  {    
+  {
   }
 
   public CompanyContact(
@@ -19,18 +19,13 @@ public class CompanyContact : Contact
   public string Fax { get; set; }
   public string Name { get; set; }
   public string OGRN { get; set; }
+  public int ManagerId { get; set; }
 
-  public new  string Nickname
-  {
-    get
-    {
-      return $"[{this.Name}, {this.OGRN}]";
-    }
-  }
+  public override string Nickname => $"[{this.Name}, {this.OGRN}]";
+
   public override string ToString()
   {
     string output = String.Empty;
-
     output += $"Name: {this.Name}\n";
     output += $"OGRN: {this.OGRN}\n";
     output += base.ToString();
