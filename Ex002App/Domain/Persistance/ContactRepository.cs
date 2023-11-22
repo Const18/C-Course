@@ -49,7 +49,12 @@ where T : Contact
 
   public void Update(int id, T model)
   {
-    throw new NotImplementedException();
+    // throw new NotImplementedException();
+
+    // Удалить "старый" контакт, "новому" контакту заменить id на "старый", добавить "новый" контакт в репозиторий:
+    Remove(id);
+    model.Id = id;
+    Append(model);
   }
 
   public override string ToString()

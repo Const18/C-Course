@@ -29,6 +29,15 @@ public class App
 
     Console.WriteLine();
 
+    userRepository.Update(1, (UserContact)contactCreator.GetContact());
+
+    foreach (UserContact item in userRepository.GetAll())
+    {
+      Console.WriteLine(item.Nickname);
+    }
+
+    Console.WriteLine();
+
     foreach (CompanyContact item in companyRepository.GetAll())
     {
       Console.WriteLine(item.Nickname + "  " + item.ManagerId);
