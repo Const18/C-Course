@@ -34,9 +34,26 @@
         Person n15 = new("Кира", Gender.Female);
         n15.SetParent(n12).SetParent(n13);
         
-        // Console.WriteLine(n15.Gen);
-        HashSet<Person> l = new() {n15, n0};
-        l.Fathers().Print();
+
+        Console.WriteLine(n2.Name);
+        Console.Write("Родители: ");
+        n2.ToLst().Parents().Print();
+        Console.Write("Бабушки: ");
+        n2.ToLst().Parents().Parents().Female().Print();
+        Console.Write("Двоюродные: ");
+        n2.ToLst().Parents().Siblings().Childs().Print();
+
+        Console.WriteLine("=========================");
+
+        Console.WriteLine(n1.Name);
+        Console.Write("Племянники супруги: ");
+        n1.ToLst().Spouses().Siblings().Childs().Print();
+        Console.Write("Шурин: ");
+        n1.ToLst().Spouses().Siblings().Male().Print();
+        Console.Write("Тёща: ");
+        n1.ToLst().Spouses().Parents().Female().Print();
+
+
     }
 }
 
@@ -57,14 +74,9 @@ public class Person
     public string Name {get;}
     public Gender Gen {get;}
 
+    // Родители
     private Dictionary<Gender, Person> parent;
     public Dictionary<Gender, Person>.ValueCollection Parents { get => parent.Values; }
-    public Person Father { get => parent.GetValueOrDefault(Gender.Male); }
-    public Person Mother { get => parent.GetValueOrDefault(Gender.Female); }
-    public List<Person> Childs {get;}
-    private Person spouse;
-    public Person Spouse { get => spouse; }
-
     public Person SetParent(Person n)
     {
         if (parent.GetValueOrDefault(n.Gen) != null)
@@ -73,6 +85,14 @@ public class Person
         n.Childs.Add(this);
         return this;
     }
+
+    // Дети
+    public List<Person> Childs {get;}
+    
+    // Супруг(а)
+    private Person spouse;
+    public Person Spouse { get => spouse; }
+
     public void Marriage(Person n)
     {
         if (spouse != null)
@@ -86,33 +106,61 @@ public class Person
     }
 }
 
-/*
-    "Отец" : Father, *
-    "Мать" : Mather, *
-    "Родители" : Parent.Values[], *
-
-    "Муж" : Spouse, Male
-    "Жена" : Spouse, Female
-    "Супруг" : Spouse, *
-
-    "Сыновья" : Childs[], Male
-    "Дочери" " Childs[], Female
-    "Дети" : Childs[], *
-
-    "Дедушка" : "Родители" --> "Отец"
-    "Бабушка" : "Родители" --> "Мать"
-    "Внуки" : "Дети" --> "Дети"
-    "Брат" : "Родители" --> ("Сыновья" - this)
-    "Шурин" : "Жена" --> "Брат"
-*/
 static class Relashinship
 {
-    public static HashSet<Person> Fathers(this HashSet<Person> lst)
+    public static HashSet<Person> ToLst(this Person n) => new() {n};
+
+    public static HashSet<Person> Parents(this HashSet<Person> lst)
     {
         HashSet<Person> result = new();
         foreach (var item in lst)
         {
-            if (item.Father != null) result.Add(item.Father);
+            result.UnionWith(item.Parents);
+        }
+        return result;
+    }
+
+    public static HashSet<Person> Childs(this HashSet<Person> lst)
+    {
+        HashSet<Person> result = new();
+        foreach (var item in lst)
+        {
+            result.UnionWith(item.Childs);
+        }
+        return result;
+    }
+
+    public static HashSet<Person> Spouses(this HashSet<Person> lst)
+    {
+        HashSet<Person> result = new();
+        foreach (var item in lst)
+        {
+            if (item.Spouse != null) result.Add(item.Spouse);
+        }
+        return result;
+    }
+
+    private static HashSet<Person> GenderFilter(HashSet<Person> lst, Gender gen)
+    {
+        HashSet<Person> result = new();
+        foreach (var item in lst)
+        {
+            if (item.Gen == gen) result.Add(item);
+        }
+        return result;
+    }
+    public static HashSet<Person> Male(this HashSet<Person> lst) => GenderFilter(lst, Gender.Male);
+    public static HashSet<Person> Female(this HashSet<Person> lst) => GenderFilter(lst, Gender.Female);
+
+    public static HashSet<Person> Siblings(this HashSet<Person> lst)
+    {
+        HashSet<Person> result = new();
+        foreach (var item in lst)
+        {
+            var ItemSibling =  item.ToLst().Parents().Childs();
+            // Убрать себя из списка детей своих родителей
+            ItemSibling.Remove(item);
+            result.UnionWith(ItemSibling);
         }
         return result;
     }
@@ -121,8 +169,9 @@ static class Relashinship
     {
         foreach (var item in lst)
         {
-            Console.WriteLine(item.Name);
+            Console.Write(item.Name + " ");
         }
+        Console.WriteLine();
     }
 }
 
