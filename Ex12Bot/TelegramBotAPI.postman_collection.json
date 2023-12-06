@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "e5859bf4-1e9e-44c5-8515-d4b062c290ce",
+		"name": "TelegramBotAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17367059"
+	},
+	"item": [
+		{
+			"name": "getMe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.telegram.org/bot{{TOKEN}}/getMe",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot{{TOKEN}}",
+						"getMe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUpdates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.telegram.org/bot{{TOKEN}}/getUpdates?offset=165634167",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot{{TOKEN}}",
+						"getUpdates"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "165634167"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sendmessage",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"chat_id\": 1387606641,\n    \"text\": \"Hello\",\n    \"reply_to_message_id\": 4\n}"
+				},
+				"url": {
+					"raw": "https://api.telegram.org/bot{{TOKEN}}/sendmessage",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot{{TOKEN}}",
+						"sendmessage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sendmessage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.telegram.org/bot{{TOKEN}}/sendmessage?chat_id=1387606641&text=Привет",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot{{TOKEN}}",
+						"sendmessage"
+					],
+					"query": [
+						{
+							"key": "chat_id",
+							"value": "1387606641"
+						},
+						{
+							"key": "text",
+							"value": "Привет"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TOKEN",
+			"value": "6458600619:AAEMq9in9Dw_fH6nzbiBaAqfwR4tB1UQ4gw",
+			"type": "string"
+		}
+	]
+}
